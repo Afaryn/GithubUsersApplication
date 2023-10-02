@@ -1,12 +1,12 @@
-package com.example.githubusers.ui.Main
+package com.example.githubusers.ui.main
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.githubusers.data.response.GitResponse
-import com.example.githubusers.data.response.ItemsItem
-import com.example.githubusers.data.retrofit.ApiConfig
+import com.example.githubusers.data.online.response.GitResponse
+import com.example.githubusers.data.online.response.ItemsItem
+import com.example.githubusers.data.online.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +21,7 @@ class MainViewModel: ViewModel() {
 
     companion object{
         private const val TAG = "MainViewModel"
-        private const val USER_ID = "afaryn"
+        private const val USER_ID = "afa"
     }
 
     init {

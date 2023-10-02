@@ -5,13 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import com.example.githubusers.R
-import com.example.githubusers.ui.Main.MainActivity
+import com.example.githubusers.ui.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        actionBar?.hide()
         val iv_note = findViewById<ImageView>(R.id.iv_note)
         iv_note.alpha=0f
         iv_note.animate().setDuration(1500).alpha(1f).withEndAction{

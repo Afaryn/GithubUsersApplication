@@ -1,8 +1,8 @@
-package com.example.githubusers.data.retrofit
+package com.example.githubusers.data.online.retrofit
 
-import com.example.githubusers.data.response.DetailUserResponse
-import com.example.githubusers.data.response.GitResponse
-import com.example.githubusers.data.response.ItemsItem
+import com.example.githubusers.data.online.response.DetailUserResponse
+import com.example.githubusers.data.online.response.GitResponse
+import com.example.githubusers.data.online.response.ItemsItem
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -22,4 +22,5 @@ interface ApiService {
 
     @GET("users/{username}/following")
     fun getFollowing(@Path("username") username: String): Call<List<ItemsItem>>
+
 }

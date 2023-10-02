@@ -1,17 +1,27 @@
-package com.example.githubusers.ui.Main
+package com.example.githubusers.ui.main
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.githubusers.data.response.ItemsItem
+import com.example.githubusers.R
+import com.example.githubusers.data.online.response.ItemsItem
 import com.example.githubusers.databinding.ActivityMainBinding
-import com.example.githubusers.ui.Detail.UserDetailActivity
+import com.example.githubusers.ui.detail.UserDetailActivity
+import com.example.githubusers.ui.fav.FavUserActivity
+import com.example.githubusers.ui.setting.ds
+import com.example.githubusers.ui.setting.settingModeActivity
+import com.example.githubusers.ui.setting.settingModeViewModel
+import com.example.githubusers.ui.setting.settingPreferences
+import com.example.githubusers.ui.setting.settingViewModelFactory
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,15 +42,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        supportActionBar?.hide()
 
         val mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
             MainViewModel::class.java)
-
-        val layoutManager = LinearLayoutManager(this)
-        binding.rvUser.layoutManager = layoutManager
-        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
-        binding.rvUser.addItemDecoration(itemDecoration)
 
         binding.rvUser.adapter = adapter // Set adapter to RecyclerView
 
@@ -71,6 +75,24 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
         }
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvUser.layoutManager = layoutManager
+        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+        binding.rvUser.addItemDecoration(itemDecoration)
+
+        val preferences = settingPreferences.getInstance(application.ds)
+        val modeViewModel = ViewModelProvider(this,settingViewModelFactory(preferences)).get(
+            settingModeViewModel::class.java
+        )
+        modeViewModel.getModeSettings().observe(this){isDarkModeActive:Boolean->
+            if (isDarkModeActive){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }else{
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+
+        }
+
     }
 
     private fun setUserData(userData: List<ItemsItem?>?) {
@@ -81,6 +103,31 @@ class MainActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.fav_button -> {
+                Intent(this, FavUserActivity::class.java).also {
+                    startActivity(it)
+                }
+                return true
+            }
+
+            R.id.darkmode -> {
+                Intent(this, settingModeActivity::class.java).also {
+                    startActivity(it)
+                }
+                return true
+            }
+
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
 }

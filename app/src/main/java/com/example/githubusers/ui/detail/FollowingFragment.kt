@@ -1,4 +1,4 @@
-package com.example.githubusers.ui.Detail
+package com.example.githubusers.ui.detail
 
 import android.os.Bundle
 import android.view.View
@@ -9,22 +9,21 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubusers.R
 import com.example.githubusers.databinding.FragmentFollowBinding
-import com.example.githubusers.ui.Main.GitUsersAdapter
+import com.example.githubusers.ui.main.GitUsersAdapter
 
-class FollowersFragment: Fragment(R.layout.fragment_follow) {
-
+class FollowingFragment: Fragment(R.layout.fragment_follow)  {
     private var _binding : FragmentFollowBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: FollowersViewModel
     private lateinit var adapter: GitUsersAdapter
     private lateinit var username: String
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentFollowBinding.bind(view)
+
         val args = arguments
         username = args?.getString(UserDetailActivity.EXTRA_USERNAME).toString()
-        _binding = FragmentFollowBinding.bind(view)
 
         adapter = GitUsersAdapter()
         adapter.notifyDataSetChanged()
@@ -35,11 +34,15 @@ class FollowersFragment: Fragment(R.layout.fragment_follow) {
             rvUser.adapter = adapter
         }
 
-
+        showLoading(true)
+        _binding?.tvNoFollowers?.visibility=View.GONE
         viewModel = ViewModelProvider(requireActivity()).get(FollowersViewModel::class.java)
-        viewModel.setListFollowers(username)
+        viewModel.setListFollowing(username)
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
 
-        viewModel.getListFollowers().observe(viewLifecycleOwner, Observer {
+        viewModel.getListFollowing().observe(viewLifecycleOwner, Observer {
             if (it!=null){
                 adapter.submitList(it)
                 showLoading(false)
@@ -51,7 +54,6 @@ class FollowersFragment: Fragment(R.layout.fragment_follow) {
         binding.rvUser.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
         binding.rvUser.addItemDecoration(itemDecoration)
-
 
     }
 

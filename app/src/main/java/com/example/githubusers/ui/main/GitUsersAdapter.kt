@@ -1,4 +1,4 @@
-package com.example.githubusers.ui.Main
+package com.example.githubusers.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.githubusers.data.response.ItemsItem
+import com.example.githubusers.data.online.response.ItemsItem
 import com.example.githubusers.databinding.ItemUserBinding
 
 class GitUsersAdapter :
@@ -15,7 +15,7 @@ class GitUsersAdapter :
     private var onItemClickCallback: ((ItemsItem) -> Unit)? = null
 
     fun setOnItemClickCallback(callback: (ItemsItem) -> Unit) {
-        onItemClickCallback = callback
+        this.onItemClickCallback = callback
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -29,9 +29,9 @@ class GitUsersAdapter :
     }
 
     inner class MyViewHolder(private val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
-
         init {
             itemView.setOnClickListener {
+                @Suppress("DEPRECATION")
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val user = getItem(position)

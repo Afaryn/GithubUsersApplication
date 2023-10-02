@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.example.githubusers.ui.Detail
+package com.example.githubusers.ui.detail
 
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.githubusers.R
+import com.example.githubusers.ui.detail.FollowersFragment
+import com.example.githubusers.ui.detail.FollowingFragment
 
 
 class PagerAdapter(private val mContext: Context, fm: FragmentManager, data: Bundle):FragmentPagerAdapter(fm,
@@ -34,7 +36,7 @@ class PagerAdapter(private val mContext: Context, fm: FragmentManager, data: Bun
         return fragment as Fragment
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
         return mContext.resources.getString(TAB_TITLES[position])
     }
 

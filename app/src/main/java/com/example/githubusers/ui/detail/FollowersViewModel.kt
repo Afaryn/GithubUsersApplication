@@ -1,11 +1,11 @@
-package com.example.githubusers.ui.Detail
+package com.example.githubusers.ui.detail
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.githubusers.data.response.ItemsItem
-import com.example.githubusers.data.retrofit.ApiConfig
+import com.example.githubusers.data.online.response.ItemsItem
+import com.example.githubusers.data.online.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
